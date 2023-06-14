@@ -5,15 +5,15 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import streamlit as st
 import os
-"st.session_state object:" , st.session_state
+#"st.session_state object:" , st.session_state
 
 st.title("Шакализатор")
 "### Тут можно ~~зашакалить~~ сжать картинку"
-info=("Эта программа использует сингулярное разложение, для понижения ранга матрицы до заданного пользователем. "
+info=("Эта программа использует **сингулярное разложение**, для понижения ранга матрицы картинки до заданного пользователем. "
     "В результате, мы получаем сжатую (aka зашакаленную) картинку. "
     "Сразу предупрежу, что такой алгоритм очень аккуратный, так что реально заметный результат можно будет увидеть только если сжимать строку "
-    "до пары процентов от изначального размера картинки в пикселях. "
-    "Также хочу отметить, что алгоритм небыстрый, так что обработка изображения с высоким разрешением занимает достаточно много времени")
+    "до **пары процентов** от изначального размера картинки в пикселях. "
+    "Также хочу отметить, что **алгоритм небыстрый**, так что обработка изображения с высоким разрешением занимает достаточно много времени")
 #my_container = st.container()
 # if 'my_container' not in st.session_state:
 #     st.session_state.my_container = my_container
@@ -54,6 +54,7 @@ with col1:
     "Изображение до шакализации"
     if st.button('Чё тут у нас?',type='primary',key='pic_show'):
         st.image(img)
+        f'Размер картинки: **{size}**x**{img.shape[1]}**'
 shakal = st.number_input('Введите количество шакалов',key = 'numeric', min_value=1, max_value=size, value=size,on_change=update_slider)
 slider_value = st.slider('Можете ещё вот так выбрать', min_value = 1, 
                         value = shakal, 
