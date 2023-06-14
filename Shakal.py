@@ -49,18 +49,19 @@ if file is not None:
     img = plt.imread(file)[:, :, 0]
     size = img.shape[0]
 with st.container():
+    shakal = st.number_input('Введите количество шакалов',key = 'numeric', min_value=1, max_value=size, value=size,on_change=update_slider)
+    slider_value = st.slider('Можете ещё вот так выбрать', min_value = 1, 
+                        value = shakal, 
+                        max_value = size,
+                        step = 1,
+                        key = 'slider', on_change= update_numin)
     col1, col2 = st.columns([1,1])
 with col1:
     "Изображение до шакализации"
     if st.button('Чё тут у нас?',type='primary',key='pic_show'):
         st.image(img)
         f'Размер картинки: **{size}**x**{img.shape[1]}**'
-shakal = st.number_input('Введите количество шакалов',key = 'numeric', min_value=1, max_value=size, value=size,on_change=update_slider)
-slider_value = st.slider('Можете ещё вот так выбрать', min_value = 1, 
-                        value = shakal, 
-                        max_value = size,
-                        step = 1,
-                        key = 'slider', on_change= update_numin)
+
 fig,ax = plt.subplots()
 ax.grid(False)
 ax.axis('off')
@@ -72,6 +73,7 @@ with col2:
         #st.image(fig)
         #st.pyplot(ax.imshow(shakaled))
         fig
+        f"Средняя абсолютная ошибка: **{np.mean(np.abs(shakaled-img))}**"
     else:
         text='Ещё не зашакалили'
         st.markdown(f"<div style='text-align: center;vertical-align: middle'>{text}</div>",unsafe_allow_html=True)
