@@ -51,7 +51,11 @@ def update_slider():
 def update_numin():
     st.session_state.numeric = st.session_state.slider 
 
-with st.container():
+
+if file is not None:
+    img = plt.imread(file)
+    size = img[:, :, 0].shape[0]
+    with st.container():
         if file is not None:
             img = plt.imread(file)[:, :, 0]
             size = img.shape[0]
@@ -63,10 +67,6 @@ with st.container():
                             step = 1,
                             key = 'slider', on_change= update_numin)
         col1, col2 = st.columns([1,1])
-if file is not None:
-    img = plt.imread(file)
-    size = img[:, :, 0].shape[0]
-
     with col1:
         "Изображение до шакализации"
         st.divider()
