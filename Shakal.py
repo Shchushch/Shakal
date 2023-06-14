@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import streamlit as st
 import os
+from sys import getsizeof
 from PIL import Image as im
 from sklearn.metrics import mean_absolute_error
 
@@ -64,19 +65,16 @@ with st.container():
         col1, col2 = st.columns([1,1])
 if file is not None:
     img = plt.imread(file)
-    
     size = img[:, :, 0].shape[0]
- 
+
     with col1:
         "Изображение до шакализации"
         st.divider()
         st.image(img)
         st.divider()
-        f'Размер картинки: **{size}**x**{img.shape[1]}**'
-    fig =plt.figure()
-    ax = fig.add_subplot(1,1,1)
-    ax.grid(False)
-    ax.axis('off')
+        f'Размер картинки: **{size}**x**{img.shape[1]}**'#\
+           # Или {img.size*img.mode}'
+   
     with col2:
         "Изображение после шакализации"
         st.divider()
@@ -85,10 +83,15 @@ if file is not None:
         with col2:
             st.image(im.fromarray(shakaled).convert('RGB'))
             st.divider()
+            nsamples, nx, ny = shakaled.shape
+            d2_shakaled,d2_img = shakaled.reshape((nsamples,nx*ny)),img.reshape((nsamples,nx*ny))
             R,G,B=mean_absolute_error(shakaled[:,:,0],img[:,:,0]),mean_absolute_error(shakaled[:,:,1],img[:,:,1]),mean_absolute_error(shakaled[:,:,2],img[:,:,2])
-            f'Размер картинки: **{size}**x**{shakaled.shape[1]}**'
+            RGB= mean_absolute_error(d2_shakaled,d2_img)
+
+            f'Размер картинки: **{size}**x**{shakaled.shape[1]}**\
+            \nСжато на **{(100-(shakal/size*100)):.2f}%**'
             f"Средняя абсолютная ошибка:\
-            \nRGB: **{np.mean((R,G,B))}** \
+            \nRGB: **{RGB}** \
             \nR: **{R}** \
             \nG: **{G}** \
             \nB: **{B}** \
