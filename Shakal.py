@@ -56,7 +56,7 @@ with st.container():
             img = plt.imread(file)[:, :, 0]
             size = img.shape[0]
         shakal_pic=st.button('Шакализовать',type='primary',key='shakal_pic',use_container_width=True)
-        shakal = st.number_input('Введите количество шакалов',key = 'numeric', min_value=1, max_value=size, value=size,on_change=update_slider)
+        shakal = st.number_input('Введите ~количество шакалов~ до какого ранга сжать',key = 'numeric', min_value=1, max_value=size, value=size,on_change=update_slider)
         slider_value = st.slider('Можете ещё вот так выбрать', min_value = 1, 
                             value = shakal, 
                             max_value = size,
